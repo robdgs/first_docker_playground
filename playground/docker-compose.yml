@@ -1,0 +1,29 @@
+version: "3"
+services:
+  playground:
+    container_name: playground
+    build:
+      context: .
+      #args:
+      #  USER: jacopo
+    #restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/playground
+      - ./node_modules:/playground/node_modules
+    environment:
+      - VIRTUAL_HOST=playground.keplera.local
+      - VIRTUAL_PORT=80
+    networks:
+      playgroundnetwork:
+        ipv4_address: 80.10.203.81
+networks:
+  playgroundnetwork:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 80.10.203.0/24
+volumes:
+  playground:
